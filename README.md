@@ -5,7 +5,7 @@
 
 Hierarchical Configuration is a python library that is able to take a running configuration of a network device, compare it to its intended configuration, and build the remediation steps necessary bring a device into spec with its intended configuration.
 
-Hierarchical Configuraiton has been used extensively on:
+Hierarchical Configuration has been used extensively on:
 
 - [x] Cisco IOS
 - [x] Cisco IOSXR

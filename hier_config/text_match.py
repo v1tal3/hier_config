@@ -2,15 +2,12 @@ import re
 
 
 class TextMatch(object):
-    """
-    Provides a suite of text matching methods
-    """
+    """ Provides a suite of text matching methods """
 
     @classmethod
     def dict_call(cls, test, text, expression):
-        """
-        Allows test methods to be called easily from variables
-        """
+        """ Allows test methods to be called easily from variables """
+
         return {
             'equals': cls.equals,
             'startswith': cls.startswith,
@@ -24,7 +21,8 @@ class TextMatch(object):
 
     @staticmethod
     def equals(text, expression):
-        """Text equivalence test"""
+        """ Text equivalence test """
+
         if isinstance(expression, str):
             return text == expression
         else:
@@ -32,32 +30,37 @@ class TextMatch(object):
 
     @staticmethod
     def startswith(text, expression):
-        """Text starts with test"""
+        """ Text starts with test """
         return text.startswith(expression)
 
     @staticmethod
     def endswith(text, expression):
-        """Text ends with test"""
+        """ Text ends with test """
+
         return text.endswith(expression)
 
     @staticmethod
     def contains(text, expression):
-        """Text contains test"""
+        """ Text contains test """
+
         return expression in text
 
     @staticmethod
     def anything(text, expression):
-        """Always returns True"""
+        """ Always returns True """
+
         return True
 
     @staticmethod
     def nothing(text, expression):
-        """Always returns False"""
+        """ Always returns False """
+
         return False
 
     @staticmethod
     def contains_or_endswith(text, expression, with_pad=False):
-        """Text contains test"""
+        """ Text contains test """
+
         if with_pad:
             if TextMatch.endswith(text, ' {}'.format(expression)):
                 return True
@@ -76,4 +79,5 @@ class TextMatch(object):
         Test regex match. This method is comparatively
         very slow and should be avoided where possible.
         """
+
         return re.search(expression, text) is not None

@@ -10,7 +10,7 @@ setup(
     description="A router and switch configuration intention tool, used to build remediation configurations.",
     long_description="A router and switch configuration intention tool, used to build remediation configurations.",
     url="https://netdevops.io/hier_config/",
-    license="MTI",
+    license="MIT",
     packages=find_packages(exclude=['docs', 'tests']),
     author="Andrew Edwards, Jan Brooks, James Williams",
     author_email="andrew.edwards@rackspace.com, jan.brooks@rackspace.com, james.williams@rackspace.com",

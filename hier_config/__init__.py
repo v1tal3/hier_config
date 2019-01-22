@@ -317,7 +317,6 @@ class HConfig(HConfigBase):
         """
         Handler for tagging sections of Hierarchical Configuration data structure
         for inclusion and exclusion.
-
         """
 
         for rule in tag_rules:
@@ -336,10 +335,7 @@ class HConfig(HConfigBase):
         return 0
 
     def _add_acl_sequence_numbers(self):
-        """
-        Add ACL sequence numbers for use on configurations with a style of 'ios'
-
-        """
+        """ Add ACL sequence numbers for use on configurations with a style of 'ios' """
 
         ipv4_acl_sw = 'ip access-list'
         # ipv6_acl_sw = ('ipv6 access-list')
@@ -358,10 +354,7 @@ class HConfig(HConfigBase):
         return self
 
     def _rm_ipv6_acl_sequence_numbers(self):
-        """
-        If there are sequence numbers in the IPv6 ACL, remove them
-
-        """
+        """ If there are sequence numbers in the IPv6 ACL, remove them """
 
         for acl in self.get_children('startswith', 'ipv6 access-list '):
             for entry in acl.children:
@@ -379,14 +372,9 @@ class HConfig(HConfigBase):
     def all_children_sorted_with_lineage_rules(self, rules):
         """
 
-        Args:
-
-            rules: list of lineage rules
-
-        Yields:
-
-            instances of Hierarchical Configuration that match one of the lineage rules
-
+        :param rules: List of lineage rules
+        :type rules: List
+        :yields: Instances of Hierarchical Configuration that match one of the lineage rules
         """
 
         yielded = set()
@@ -426,10 +414,7 @@ class HConfig(HConfigBase):
         return base
 
     def set_order_weight(self):
-        """
-        Sets self.order integer on all children
-
-        """
+        """ Sets self.order integer on all children """
 
         for child in self.all_children():
             for rule in self.options['ordering']:
@@ -437,13 +422,10 @@ class HConfig(HConfigBase):
                     child.order_weight = rule['order']
 
     def add_sectional_exiting(self):
-        """
-        Adds the sectional exiting text as a child
+        """ Adds the sectional exiting text as a child """
 
-        """
-
-        # TODO why do we need to delete the delete the sub_child and then
-        # recreate it?
+        # TODO: why do we need to delete the delete the sub_child and then
+        #  recreate it?
         for child in self.all_children():
             for rule in self.options['sectional_exiting']:
                 if child.lineage_test(rule):

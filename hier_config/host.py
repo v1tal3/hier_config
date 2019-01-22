@@ -39,7 +39,6 @@ class Host:
     :param hconfig_options: type dict
 
     :return: Host Object
-
     """
 
     def __init__(self, hostname, os, hconfig_options):
@@ -62,6 +61,7 @@ class Host:
 
         :return: self._running_config -> type HConfig Object or None
         """
+
         if self._running_config is None:
             self._running_config = self._get_running_config()
         return self._running_config
@@ -73,6 +73,7 @@ class Host:
 
         :return: self._compiled_config -> type HConfig Object or None
         """
+
         if self._compiled_config is None:
             self._compiled_config = self._get_compiled_config()
         return self._compiled_config
@@ -84,6 +85,7 @@ class Host:
 
         :return: self._remediation_config -> type HConfig Object or None
         """
+
         if self._remediation_config is None:
             self._remediation_config = self._get_remediation_config()
         return self._remediation_config
@@ -95,6 +97,7 @@ class Host:
 
         :return: self._hconfig_tags -> type list of dicts
         """
+
         return self._hconfig_tags
 
     def load_config_from(self, config_type, name, load_file=True):
@@ -109,6 +112,7 @@ class Host:
         :param load_file: default, True -> type bool
         :return: self.running_config or self.compiled_config
         """
+
         hier = HConfig(host=self)
 
         if load_file:
@@ -133,11 +137,12 @@ class Host:
 
     def load_remediation(self):
         """
-        Once self.running_config and self.compled_config have been created,
+        Once self.running_config and self.compiled_config have been created,
         create self.remediation_config
 
         :return: self.remediation_config
         """
+
         if self.running_config and self.compiled_config:
             self._remediation_config = self.running_config.config_to_get_to(
                 self.compiled_config
@@ -158,8 +163,9 @@ class Host:
 
         :param include_tags: type list
         :param exclude_tags: type list
-        :return: self.facts['remediation_conig_raw'] -> type str
+        :return: self.facts['remediation_config_raw'] -> type str
         """
+
         remediation_text = str()
 
         if include_tags or exclude_tags is not None:
@@ -201,6 +207,7 @@ class Host:
         :param load_file: default, True -> type bool
         :return: self.hconfig_tags
         """
+
         if load_file:
             self._hconfig_tags = self._load_from_file(name, parse_yaml=True)
         else:
@@ -217,6 +224,7 @@ class Host:
         :param parse_yaml: type boolean
         :return: content -> type str or type dict
         """
+
         with open(name) as f:
             content = f.read()
 

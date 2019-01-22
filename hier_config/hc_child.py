@@ -27,7 +27,6 @@ class HConfigChild(HConfigBase):
         """
         Used for when self.text is changed after the object
         is instantiated to rebuild the children dictionary
-
         """
 
         self._text = value.strip()
@@ -75,7 +74,7 @@ class HConfigChild(HConfigBase):
 
     @property
     def root(self):
-        """ returns the HConfig object at the base of the tree """
+        """ Returns the HConfig object at the base of the tree """
 
         return self.parent.root
 
@@ -96,7 +95,7 @@ class HConfigChild(HConfigBase):
 
     def move(self, new_parent):
         """
-        move one HConfigChild object to different HConfig parent object
+        Move one HConfigChild object to different HConfig parent object
 
         .. code:: python
 
@@ -110,7 +109,6 @@ class HConfigChild(HConfigBase):
 
         :param new_parent: HConfigChild object -> type list
         :return: None
-
         """
 
         new_parent.children.append(self)
@@ -118,10 +116,7 @@ class HConfigChild(HConfigBase):
         self.delete()
 
     def lineage(self):
-        """
-        Return the lineage of parent objects, up to but excluding the root
-
-        """
+        """ Return the lineage of parent objects, up to but excluding the root """
 
         if self.root is self.parent:
             yield self
@@ -131,16 +126,13 @@ class HConfigChild(HConfigBase):
             yield self
 
     def path(self):
-        """
-        Return a list of the text instance variables from self.lineage
-
-        """
+        """ Return a list of the text instance variables from self.lineage """
 
         for obj in self.lineage():
             yield obj.text
 
     def cisco_style_text(self, style='without_comments', tag=None):
-        """ Return a Cisco style formated line i.e. indentation_level + text ! comments """
+        """ Return a Cisco style formatted line i.e. indentation_level + text ! comments """
 
         comments = []
         if style == 'without_comments':
@@ -176,58 +168,40 @@ class HConfigChild(HConfigBase):
         self.parent.del_child(self)
 
     def ancestor_append_tags(self, tags):
-        """
-        Append tags to self.tags and for all ancestors
-
-        """
+        """ Append tags to self.tags and for all ancestors """
 
         for ancestor in self.lineage():
             ancestor.append_tags(tags)
 
     def ancestor_remove_tags(self, tags):
-        """
-        Remove tags to self.tags and for all ancestors
-
-        """
+        """ Remove tags to self.tags and for all ancestors """
 
         for ancestor in self.lineage():
             ancestor.remove_tags(tags)
 
     def deep_append_tags(self, tags):
-        """
-        Append tags to self.tags and recursively for all children
-
-        """
+        """ Append tags to self.tags and recursively for all children """
 
         self.append_tags(tags)
         for child in self.all_children():
             child.append_tags(tags)
 
     def deep_remove_tags(self, tags):
-        """
-        Remove tags from self.tags and recursively for all children
-
-        """
+        """ Remove tags from self.tags and recursively for all children """
 
         self.remove_tags(tags)
         for child in self.all_children():
             child.remove_tags(tags)
 
     def append_tags(self, tags):
-        """
-        Add tags to self.tags
-
-        """
+        """ Add tags to self.tags """
 
         tags = H.to_list(tags)
         # self._tags.update(tags)
         self.tags.update(tags)
 
     def remove_tags(self, tags):
-        """
-        Remove tags from self.tags
-
-        """
+        """ Remove tags from self.tags """
 
         tags = H.to_list(tags)
         # self._tags.difference_update(tags)
@@ -267,10 +241,9 @@ class HConfigChild(HConfigBase):
 
     def _idempotent_acl_check(self):
         """
-        Handle conditional testing to determine if idempotent acl handling for iosxr should be used
+        Handle conditional testing to determine if idempotent acl handling for iosxr should be used.
 
         :return: boolean
-
         """
 
         if self.host.os in {'iosxr'}:
@@ -286,7 +259,6 @@ class HConfigChild(HConfigBase):
 
         :param other_children: HConfigChild object -> type list
         :return: boolean
-
         """
 
         # Blacklist commands from matching as idempotent
@@ -317,7 +289,6 @@ class HConfigChild(HConfigBase):
         """
         Check self's text to see if negation should be handled by
         overwriting the section without first negating it
-
         """
 
         for rule in self.options[
@@ -352,7 +323,6 @@ class HConfigChild(HConfigBase):
         """
         Given the line_tags, include_tags, and exclude_tags,
         determine if the line should be included
-
         """
 
         include_line = False

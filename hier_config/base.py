@@ -28,11 +28,10 @@ class HConfigBase(object):
 
     def add_children(self, lines):
         """
-        Add child instances of HConfigChild
+        Add child instances of HConfigChild.
 
         :param lines: HConfigChild object -> type list
         :return: None
-
         """
 
         if isinstance(lines, str):
@@ -74,13 +73,11 @@ class HConfigBase(object):
 
     def add_deep_copy_of(self, child_to_add, merged=False):
         """
-        Add a nested copy of a child to self
+        Add a nested copy of a child to self.
 
-        :param child_to_add: type HConfigCHild
+        :param child_to_add: type HConfigChild
         :param merged: type boolean, default False
-
         :return: new_child
-
         """
 
         new_child = self.add_shallow_copy_of(child_to_add, merged=merged)
@@ -91,11 +88,10 @@ class HConfigBase(object):
 
     def to_tag_spec(self, tags):
         """
-        Returns the configuration as a tag spec definition
+        Returns the configuration as a tag spec definition.
 
         This is handy when you have a segment of config and need to
         generate a tag spec to tag configuration in another instance
-
         """
 
         tag_spec = []
@@ -142,7 +138,7 @@ class HConfigBase(object):
                 yield child
 
     def all_children_sorted_by_tags(self, include_tags, exclude_tags):
-        """ Yield all children recursively that match include/exlcude tags """
+        """ Yield all children recursively that match include/exclude tags """
 
         for child in self.all_children_sorted():
             if child.line_inclusion_test(include_tags, exclude_tags):
@@ -364,7 +360,7 @@ class HConfigBase(object):
                     new_item.comments.add("new section")
 
     def _duplicate_child_allowed_check(self):
-        """ Determine if duplicate(identical text) children are allowed under the parent """
+        """ Determine if duplicate (identical text) children are allowed under the parent """
 
         for rule in self.options[
                 'parent_allows_duplicate_child']:
@@ -378,7 +374,6 @@ class HConfigBase(object):
         Evaluate a list of lineage text_match rules.
 
         Only one text_match rule must match in order to return True
-
         """
 
         for rule in rules:
@@ -405,7 +400,6 @@ class HConfigBase(object):
         Evaluate a list of lineage object rules.
 
         All object rules must match in order to return True
-
         """
 
         matches = 0
