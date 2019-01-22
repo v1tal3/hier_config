@@ -34,9 +34,12 @@ class Host:
         # Example of creating a remediation config with a tag ('safe') targeting a specific config.
         host.filter_remediation(include_tags=['safe'])
 
-    :param hostname: type str
-    :param os: type str
-    :param hconfig_options: type dict
+    :param hostname: Device hostname
+    :type hostname: String
+    :param os: Device OS type
+    :type os: String
+    :param hconfig_options: Options settings for HConfig to use when parsing configs
+    :type hconfig_options: Dict
 
     :return: Host Object
     """
@@ -57,9 +60,10 @@ class Host:
     @property
     def running_config(self):
         """
-        running configuration property
+        Running configuration property
 
-        :return: self._running_config -> type HConfig Object or None
+        :return: self._running_config
+        :return type: HConfig Object or None
         """
 
         if self._running_config is None:
@@ -69,9 +73,10 @@ class Host:
     @property
     def compiled_config(self):
         """
-        compiled configuration property
+        Compiled configuration property
 
-        :return: self._compiled_config -> type HConfig Object or None
+        :return: self._compiled_config
+        :return type: HConfig Object or None
         """
 
         if self._compiled_config is None:
@@ -81,9 +86,10 @@ class Host:
     @property
     def remediation_config(self):
         """
-        remediation configuration property
+        Remediation configuration property
 
-        :return: self._remediation_config -> type HConfig Object or None
+        :return: self._remediation_config
+        :return type: HConfig Object or None
         """
 
         if self._remediation_config is None:
@@ -93,9 +99,10 @@ class Host:
     @property
     def hconfig_tags(self):
         """
-        hier-config tags property
+        Hier-config tags property
 
-        :return: self._hconfig_tags -> type list of dicts
+        :return: self._hconfig_tags
+        :return type: List of dicts
         """
 
         return self._hconfig_tags
@@ -107,9 +114,12 @@ class Host:
         3. Loads the config into HConfig
         4. Sets the loaded hier-config in host.facts['running_config'] or host.facts['compiled_config']
 
-        :param config_type: 'running' or 'compiled' -> type str
-        :param name: file name or config text string to load -> type str
-        :param load_file: default, True -> type bool
+        :param config_type: Set to 'running' or 'compiled'
+        :type config_type: String
+        :param name: File name or config text string to load
+        :type name: String
+        :param load_file: Load config from file if set to True (default)
+        :type load_file: Bool
         :return: self.running_config or self.compiled_config
         """
 
@@ -162,13 +172,16 @@ class Host:
         Run filter jobs, based on tags on self.remediation_config
 
         :param include_tags: type list
+        :type include_tags: List
         :param exclude_tags: type list
-        :return: self.facts['remediation_config_raw'] -> type str
+        :type exclude_tags: List
+        :return: self.facts['remediation_config_raw']
+        :return type: String
         """
 
         remediation_text = str()
 
-        if include_tags or exclude_tags is not None:
+        if include_tags or exclude_tags:
             include_tags = H.to_list(include_tags)
             exclude_tags = H.to_list(exclude_tags)
 
@@ -203,8 +216,9 @@ class Host:
             tags = [{"lineage": [{"startswith": "interface"}], "add_tags": "interfaces"}]
             host.load_tags(tags, file=False)
 
-        :param name: tags from a file or dictionary
-        :param load_file: default, True -> type bool
+        :param name: Tags from a file or dictionary
+        :param load_file: Load tags from file if set to True (default)
+        :type load_file: Bool
         :return: self.hconfig_tags
         """
 
@@ -220,9 +234,12 @@ class Host:
         """
         Opens a config file and loads it as a string.
 
-        :param name: type str
-        :param parse_yaml: type boolean
-        :return: content -> type str or type dict
+        :param name: Name of file
+        :type name: String
+        :param parse_yaml: Set to True if file is of type YAML to parse contents correctly
+        :type parse_yaml: Bool
+        :return: Contents of file
+        :return type: String, or Dict if parse_yaml is set to True
         """
 
         with open(name) as f:
